@@ -36,9 +36,6 @@ By the end of this module, you should be able to:
 
 📘 **Programming 3C Module Manual**  
 
-💻 **Module GitHub Repository**  
-https://github.com/iie-PROG7313  
-
 📖 **Official Kotlin Documentation**  
 https://kotlinlang.org/docs/home.html  
 
