@@ -10,9 +10,9 @@ Room acts as a **layer on top of SQLite**. Instead of writing raw SQL everywhere
 
 In this step you will connect your authentication system to a real database so that:
 
-• registration saves a user
-• login checks the saved users
-• the app can remember accounts
+- registration saves a user
+- login checks the saved users
+- the app can remember accounts
 
 ---
 
@@ -40,9 +40,9 @@ The DAO contains the **queries and database operations**.
 
 Examples of operations:
 
-• insert a user
-• find a user by username
-• check login credentials
+- insert a user
+- find a user by username
+- check login credentials
 
 The DAO is basically the **bridge between your app and the database**.
 
@@ -54,18 +54,18 @@ The Database class connects everything together.
 
 It:
 
-• defines which entities exist
-• provides access to the DAOs
-• builds the database instance
+- defines which entities exist
+- provides access to the DAOs
+- builds the database instance
 
 ---
 
 # 🎯 By the end of this step your app will:
 
-• store registered users locally
-• prevent duplicate usernames
-• verify login credentials against the database
-• display login success or failure based on real stored data
+- store registered users locally
+- prevent duplicate usernames
+- verify login credentials against the database
+- display login success or failure based on real stored data
 
 This is the first time your app will behave like a **real application instead of a demo UI**.
 
@@ -79,9 +79,9 @@ Open your **app-level Gradle file**.
 
 You need to add the Room libraries that allow:
 
-• database runtime
-• Kotlin extensions
-• the Room compiler
+- database runtime
+- Kotlin extensions
+- the Room compiler
 
 The compiler is extremely important. It generates the database code automatically.
 
@@ -128,11 +128,11 @@ This class describes what a registered user looks like.
 
 The entity should contain the following properties:
 
-• id
-• full name
-• email
-• username
-• password
+- id
+- full name
+- email
+- username
+- password
 
 The **id field** should be the **primary key** and should automatically generate values.
 
@@ -172,8 +172,8 @@ This prevents duplicate registrations.
 
 Used during login to verify that:
 
-• the username exists
-• the password matches
+- the username exists
+- the password matches
 
 If both match, login is successful.
 
@@ -189,16 +189,16 @@ This class represents the **entire database** used by the app.
 
 It should:
 
-• declare the entity classes used by the database
-• provide access to the DAO
-• define the database version
+- declare the entity classes used by the database
+- provide access to the DAO
+- define the database version
 
 The database class should also include a **singleton instance**.
 
 A singleton ensures that:
 
-• only one database instance exists
-• the app does not accidentally create multiple database connections
+- only one database instance exists
+- the app does not accidentally create multiple database connections
 
 Multiple database instances can cause crashes or corrupted data.
 
@@ -220,10 +220,10 @@ Inside this package create an **authentication ViewModel**.
 
 This ViewModel will:
 
-• communicate with the DAO
-• perform database queries
-• expose messages to the UI
-• manage login and registration logic
+- communicate with the DAO
+- perform database queries
+- expose messages to the UI
+- manage login and registration logic
 
 This keeps your architecture clean.
 
@@ -262,11 +262,11 @@ When the login button is pressed:
 
 If a matching user exists:
 
-• login is successful
+- login is successful
 
 If no match exists:
 
-• show an error message such as “Invalid username or password”.
+- show an error message such as “Invalid username or password”.
 
 This ensures the login screen checks **real stored data instead of fake validation**.
 
@@ -280,9 +280,9 @@ Instead of performing validation directly inside the composables, the UI should 
 
 The ViewModel will then:
 
-• perform validation
-• access the database
-• return messages to display on the screen
+- perform validation
+- access the database
+- return messages to display on the screen
 
 This pattern is known as **MVVM (Model View ViewModel)** and is widely used in Android development.
 
@@ -298,11 +298,11 @@ Once the database is connected, test several scenarios.
 
 Try registering with:
 
-• empty fields
-• invalid email
-• short password
-• mismatched passwords
-• a username that already exists
+- empty fields
+- invalid email
+- short password
+- mismatched passwords
+- a username that already exists
 
 Confirm that appropriate messages appear.
 
@@ -312,9 +312,9 @@ Confirm that appropriate messages appear.
 
 Try logging in with:
 
-• an incorrect username
-• an incorrect password
-• correct credentials
+- an incorrect username
+- an incorrect password
+- correct credentials
 
 Make sure login only succeeds when the credentials match a stored user.
 
