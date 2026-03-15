@@ -278,32 +278,6 @@ This structure keeps the code clean and maintainable.
 
 ---
 
-# ⭐ Custom Features
-
-The app also includes additional features beyond the minimum requirements.
-
-## Feature 1 — Win/Loss Tracking
-
-Each session records whether the user:
-
-* won
-* lost
-* broke even
-
-The app can display win/loss statistics.
-
----
-
-## Feature 2 — Streak Rewards
-
-Users earn rewards for consistent activity such as:
-
-* logging sessions regularly
-* staying within chip limits
-* exploring multiple categories
-
----
-
 # 🧪 Testing
 
 Unit tests are included to test the core logic of the application.
