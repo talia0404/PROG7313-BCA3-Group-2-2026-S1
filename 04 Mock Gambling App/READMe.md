@@ -73,7 +73,7 @@ Example categories include:
 
 # 🚀 Main Features
 
-## 🔐 User Authentication
+## 01 🔐 User Authentication
 
 Users can:
 
@@ -85,7 +85,7 @@ This feature demonstrates authentication handling and navigation between screens
 
 ---
 
-## 🃏 Game Categories
+## 02 🃏 Game Categories
 
 Users can create and manage categories for different session types.
 
@@ -101,7 +101,7 @@ Each session must belong to a category.
 
 ---
 
-## 📝 Session Tracking
+## 03 📝 Session Tracking
 
 Users can log a gambling session with:
 
@@ -118,7 +118,7 @@ This simulates the **expense capture functionality required in the PoE**.
 
 ---
 
-## 📸 Photo Attachment
+## 04 📸 Photo Attachment
 
 Users can optionally attach a photo to a session entry.
 
@@ -132,7 +132,7 @@ Examples:
 
 ---
 
-## 🎯 Chip Goals
+## 05 🎯 Chip Goals
 
 Users can define monthly goals such as:
 
@@ -144,7 +144,7 @@ These goals are used to track user performance.
 
 ---
 
-## 📅 Session History
+## 06 📅 Session History
 
 Users can view all sessions recorded during a **selected date range**.
 
@@ -156,7 +156,7 @@ The list view allows users to:
 
 ---
 
-## 📊 Category Totals
+## 07 📊 Category Totals
 
 The app calculates how many chips were used per category during a selected period.
 
@@ -168,7 +168,7 @@ This helps you practise:
 
 ---
 
-## 📈 Graphs and Analytics
+## 08 📈 Graphs and Analytics
 
 The final version of the app includes visual charts that display:
 
@@ -181,7 +181,7 @@ These graphs allow users to analyse their behaviour visually.
 
 ---
 
-## 📊 Progress Dashboard
+## 09 📊 Progress Dashboard
 
 The dashboard shows:
 
@@ -194,7 +194,7 @@ Overspending categories are highlighted visually.
 
 ---
 
-## 🏆 Gamification
+## 10 🏆 Gamification
 
 To make the app more engaging, BetWise includes a badge system.
 
