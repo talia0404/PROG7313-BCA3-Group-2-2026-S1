@@ -1,6 +1,6 @@
 # 🎰 BetWise
 
-### A Jetpack Compose Casino Session Tracker (PROG7313 Learning App)
+### A Jetpack Compose Casino Session Tracker
 
 ![Android](https://img.shields.io/badge/Android-Jetpack%20Compose-green)
 ![Kotlin](https://img.shields.io/badge/Kotlin-Android-blue)
