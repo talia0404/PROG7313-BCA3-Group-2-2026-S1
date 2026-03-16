@@ -77,8 +77,8 @@ Example categories include:
 
 Users can:
 
-* register with a username and password
-* log in securely
+* register with a full name, username, contact detail and password
+* log in securely with username and password
 * log out of the application
 
 This feature demonstrates authentication handling and navigation between screens.
