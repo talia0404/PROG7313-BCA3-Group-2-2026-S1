@@ -309,28 +309,4 @@ In modern Android development, Room is commonly used together with:
 * **Jetpack Compose UI**
 
 These tools form the foundation of scalable Android applications.
-
----
-
-# 🏁 Summary
-
-Room Database provides a clean way to manage local data in Android apps.
-
-The three key parts are:
-
-* **Entity** → defines tables
-* **DAO** → defines queries
-* **Database** → connects everything
-
-When combined with **Jetpack Compose**, Room allows developers to build apps where **data changes automatically update the UI**, making apps more responsive and easier to maintain.
-
-For a modern project setup, make sure you are using:
-
-* **Jetpack Compose**
-* **Room**
-* **Kotlin coroutines and Flow**
-* **KSP instead of kapt**
-
-That combo is the current Android dev starter pack. Tiny little toolbox of chaos, but in a good way.
-
 ---
