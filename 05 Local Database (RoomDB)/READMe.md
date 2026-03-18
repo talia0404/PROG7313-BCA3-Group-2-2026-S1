@@ -47,7 +47,7 @@ To use Room in a **Jetpack Compose** project, you must add the required dependen
 
 ```kotlin
 plugins {
-    id("com.google.devtools.ksp")
+    id("com.google.devtools.ksp") version "2.3.4"
 }
 ```
 
