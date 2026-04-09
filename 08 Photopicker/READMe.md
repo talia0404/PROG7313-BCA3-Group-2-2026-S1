@@ -11,8 +11,11 @@ A **Photo Picker** is a **modern Android feature** that allows users to **select
 Using the Photo Picker is:
 
 ✅ **Safer** – users only share what they select
-✅ **No storage permissions needed** (huge win)
+
+✅ **No storage permissions needed** 
+
 ✅ **Modern & recommended by Android**
+
 ✅ **Cleaner UX** – consistent gallery interface
 
 ---
