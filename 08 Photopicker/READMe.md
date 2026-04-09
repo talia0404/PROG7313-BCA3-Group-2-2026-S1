@@ -129,7 +129,7 @@ if (selectedImageUri != null) {
 Intent(Intent.ACTION_PICK)
 ```
 
-👉 Requires storage permissions → outdated
+👉 Requires storage permissions -> outdated
 
 ---
 
@@ -139,8 +139,10 @@ Intent(Intent.ACTION_PICK)
 ActivityResultContracts.PickVisualMedia()
 ```
 
-👉 No permissions needed 
+👉 No permissions needed
+
 👉 Cleaner 
+
 👉 Recommended 
 
 
