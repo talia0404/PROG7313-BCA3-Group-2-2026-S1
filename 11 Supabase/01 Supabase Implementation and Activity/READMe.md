@@ -188,7 +188,7 @@ Examples:
 
 # Step 1: Create a new Android Studio project
 
-Create:
+Create a compose project:
 
 ```text
 Empty Activity
@@ -208,9 +208,9 @@ Kotlin
 
 ---
 
-# Step 2: Add dependencies ⚙️
+# Step 2: Add plugin and dependencies ⚙️
 
-Open:
+In:
 
 ```text
 build.gradle.kts (Module: app)
@@ -219,14 +219,26 @@ build.gradle.kts (Module: app)
 Add:
 
 ```kotlin
+
+plugins {
+    kotlin("plugin.serialization") version "2.0.21"
+}
+
+
 dependencies {
 
-    implementation("io.github.jan-tennert.supabase:storage-kt:3.1.4")
+    //this ensures that android picks up supabase
+    implementation(platform("io.github.jan-tennert.supabase:bom:3.6.0"))
 
-    implementation("io.ktor:ktor-client-android:3.0.3")
+    //db/storage
+    implementation("io.github.jan-tennert.supabase:postgrest-kt")
+    implementation("io.github.jan-tennert.supabase:storage-kt")
 
+    //supabase client
+    implementation("io.ktor:ktor-client-android:3.4.3")
+
+    //jetpack compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
-
     implementation("io.coil-kt:coil-compose:2.7.0")
 }
 ```
@@ -246,13 +258,7 @@ dependencies {
 
 # Part 3: Add Internet Permission 🌐
 
-Open:
-
-```text
-AndroidManifest.xml
-```
-
-Add this above the `<application>` tag:
+Add this in the android manifest file:
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET"/>
@@ -302,15 +308,81 @@ The ViewModel will:
 * manage upload states
 * store success/error messages
 
+## Important Supabase Storage Functions
+
+### Writing data to Supabase (Uploading)
+
+Uploading means sending files from the Android app to cloud storage.
+
+Example:
+
+```kotlin
+bucket.upload(
+    path = "posters/poster1.jpg",
+    data = byteArray
+)
+```
+
+This writes data into the Supabase Storage bucket.
+
+---
+
+### Reading data from Supabase (Retrieving)
+
+Reading means retrieving files from Supabase so they can be displayed in the app.
+
+Example:
+
+```kotlin
+val imageUrl = bucket.publicUrl("posters/poster1.jpg")
+```
+
+This retrieves the public URL of the uploaded image.
+
+The URL can then be displayed using Coil in Jetpack Compose.
+
+---
+
+# Understanding the Flow 🔄
+
+## Write Flow
+
+```text
+Android App
+    ->
+Select image
+    ->
+Upload image
+    ->
+Supabase Storage bucket
+```
+
+## Read Flow
+
+```text
+Supabase Storage bucket
+    ->
+Retrieve image URL
+    ->
+Display image in Android app
+```
+
+---
+
+# Tip 💡
+
+When testing Supabase Storage:
+
+* ensure the bucket is public
+* ensure internet permission is added
+* ensure the correct bucket name is used
+* ensure the Supabase URL and anon key are correct
+
+Even one incorrect character in the URL, bucket name, or API key can prevent uploads from working.
+
 ---
 
 # Part 6: Build the Compose UI 🎨
-
-Open:
-
-```text
-MainActivity.kt
-```
 
 The app UI should include:
 
@@ -326,24 +398,6 @@ The app UI should include:
 # Android Photo Picker 📸
 
 The Android Photo Picker allows users to safely choose images from their device without requesting full storage permissions.
-
-This is the modern recommended Android approach.
-
----
-
-# App Workflow 🔥
-
-```text
-1. User selects a poster image
-        ->
-2. App uploads image to Supabase Storage
-        ->
-3. Supabase returns the image URL
-        ->
-4. App displays uploaded image
-        ->
-5. Success message shown to user
-```
 
 ---
 
@@ -366,6 +420,10 @@ The selected image should now appear inside the app.
 
 ---
 
+Replace your current **“Testing the App 🧪”** section and everything below it with this updated version:
+
+---
+
 # Testing the App 🧪
 
 Test the following:
@@ -376,6 +434,24 @@ Test the following:
 | Upload image  | Upload succeeds         |
 | Display image | Uploaded image appears  |
 | Internet off  | Error message displayed |
+
+---
+
+# Resources 📚
+
+## Official Supabase Documentation
+
+Use these resources to learn more about how Supabase Storage works in Android applications.
+
+| Resource                                                                                                                            | Purpose                              |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| [Supabase Official Website](https://supabase.com?utm_source=chatgpt.com)                                                            | Main Supabase platform               |
+| [Supabase Kotlin Documentation](https://supabase.com/docs/reference/kotlin/introduction?utm_source=chatgpt.com)                     | Official Kotlin setup guide          |
+| [Supabase Storage Documentation](https://supabase.com/docs/guides/storage?utm_source=chatgpt.com)                                   | Learn how cloud file storage works   |
+| [Supabase Kotlin GitHub Repository](https://github.com/supabase-community/supabase-kt?utm_source=chatgpt.com)                       | Kotlin client library source code    |
+| [Android Photo Picker Documentation](https://developer.android.com/training/data-storage/shared/photopicker?utm_source=chatgpt.com) | Official Android Photo Picker guide  |
+| [Coil Compose Documentation](https://coil-kt.github.io/coil/compose/?utm_source=chatgpt.com)                                        | Displaying images in Jetpack Compose |
+| [Ktor Client Documentation](https://ktor.io/docs/client-create-new-application.html?utm_source=chatgpt.com)                         | Android networking with Ktor         |
 
 ---
 
