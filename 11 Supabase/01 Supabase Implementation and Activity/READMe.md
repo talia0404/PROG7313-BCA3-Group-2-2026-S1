@@ -4,72 +4,78 @@
 
 # Scenario
 
-Your university wants a simple mobile app where student societies can upload posters for campus events.
+Your university wants a simple Android app where student societies can upload and display campus event posters.
 
-Examples:
+Examples of events:
 
 * Hackathons
-* Sports events
+* Sports tournaments
 * Music nights
 * Career fairs
-* Gaming tournaments
-* Cultural events
+* Gaming competitions
+* Cultural festivals
 
-Instead of storing posters directly on the device, the app will upload them to **Supabase Storage**.
+Instead of saving images directly on the phone, the app will store posters in **Supabase Storage**.
 
 ---
 
 # Real-world context 🌍
 
-Apps like:
+Modern apps store files in cloud storage systems.
 
-* LinkedIn
-* Instagram
-* Uber
-* Airbnb
-* Eventbrite
+Examples:
 
-all upload files to cloud storage systems instead of storing files directly on users’ devices.
+| App        | Stored Files                 |
+| ---------- | ---------------------------- |
+| Instagram  | photos and reels             |
+| LinkedIn   | profile photos and documents |
+| Airbnb     | property images              |
+| Uber       | driver profile images        |
+| Eventbrite | event posters                |
 
 In this activity:
 
 ```text
-Android App -> Supabase Storage Bucket -> Cloud File Storage
+Android App -> Supabase Storage -> Cloud Storage Bucket
 ```
 
-You will simulate a real campus event management system.
+You will simulate a real mobile app connected to a cloud backend.
 
 ---
 
-# App concept
+# App Concept 📱
 
-## App name
+## App Name
 
 ```text
 Campus Event Hub
 ```
 
-## Main feature
+## Main Features
 
 The user can:
 
-* choose an event poster image
-* upload it to Supabase Storage
+* choose an event poster image using the Android Photo Picker
+* upload the image to Supabase Storage
+* retrieve the uploaded image
+* display the uploaded poster back to the user
 * view upload success messages
 
-Example poster uploads:
+Example uploads:
 
 ```text
 HackathonPoster.jpg
-BasketballTournament.png
-CulturalNightPoster.jpg
+MusicNight.png
+CareerFairPoster.jpg
 ```
 
 ---
 
-# Part 1: Create the Supabase project
+# Part 1: Create the Supabase Project ☁️
 
-## Step 1: Create a Supabase account
+---
+
+# Step 1: Create a Supabase account
 
 1. Go to Supabase.
 2. Sign up or log in.
@@ -81,17 +87,20 @@ New Project
 
 4. Enter:
 
-   * Project name:
-
 ```text
+Project Name:
 CampusEventHub
 ```
 
-* Database password:
-  create a secure password
+```text
+Database Password:
+Create a secure password
+```
 
-* Region:
-  choose the closest available region
+```text
+Region:
+Choose the closest available region
+```
 
 5. Click:
 
@@ -101,7 +110,7 @@ Create new project
 
 ---
 
-# Step 2: Get your API details
+# Step 2: Get your API details 🔑
 
 Go to:
 
@@ -116,7 +125,7 @@ Project URL
 anon public key
 ```
 
-You will use these inside Android Studio.
+These will be used inside Android Studio.
 
 Example:
 
@@ -141,42 +150,71 @@ Click:
 New Bucket
 ```
 
-Create:
+Create a bucket called:
 
 ```text
 event-posters
 ```
 
-Set the bucket to:
+Set the bucket visibility to:
 
 ```text
 Public
 ```
 
-This allows you to test uploads easily.
+This allows uploaded images to be displayed easily inside the app during testing.
 
 ---
 
 # Why use buckets?
 
-Buckets organise files in cloud storage.
+Buckets organise files inside cloud storage systems.
 
-Example buckets in real apps:
+Examples:
 
-| Bucket         | Purpose               |
+| Bucket Name    | Purpose               |
 | -------------- | --------------------- |
 | profile-images | user profile pictures |
 | receipts       | uploaded receipts     |
-| event-posters  | event posters         |
+| event-posters  | campus event posters  |
 | pet-images     | pet adoption photos   |
 | documents      | uploaded PDFs         |
 
 ---
 
-# Part 2: Create the Android app
+# Part 2: Create the Android App 📱
 
-## Step 1: Create a new Android Studio project
+---
 
+# Step 1: Create a new Android Studio project
+
+Create:
+
+```text
+Empty Activity
+```
+
+App name:
+
+```text
+CampusEventHub
+```
+
+Language:
+
+```text
+Kotlin
+```
+
+---
+
+# Step 2: Add dependencies ⚙️
+
+Open:
+
+```text
+build.gradle.kts (Module: app)
+```
 
 Add:
 
@@ -184,18 +222,29 @@ Add:
 dependencies {
 
     implementation("io.github.jan-tennert.supabase:storage-kt:3.1.4")
-    implementation("io.github.jan-tennert.supabase:auth-kt:3.1.4")
-    implementation("io.github.jan-tennert.supabase:postgrest-kt:3.1.4")
 
     implementation("io.ktor:ktor-client-android:3.0.3")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+
+    implementation("io.coil-kt:coil-compose:2.7.0")
 }
 ```
 
 ---
 
-# Part 4: Add internet permission 🌐
+# Why are these dependencies needed? 🤔
+
+| Dependency                  | Purpose                            |
+| --------------------------- | ---------------------------------- |
+| storage-kt                  | communicates with Supabase Storage |
+| ktor-client-android         | handles internet requests          |
+| lifecycle-viewmodel-compose | manages app state                  |
+| coil-compose                | displays uploaded images           |
+
+---
+
+# Part 3: Add Internet Permission 🌐
 
 Open:
 
@@ -203,25 +252,29 @@ Open:
 AndroidManifest.xml
 ```
 
-Add:
+Add this above the `<application>` tag:
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
 
-above the `<application>` tag.
-
-Without this permission, the app cannot communicate with Supabase.
+Without internet permission, the app cannot connect to Supabase.
 
 ---
 
-# Part 5: Create the Supabase client
+# Part 4: Create the Supabase Client 🔌
 
 Create a Kotlin file:
 
 ```text
 SupabaseClientProvider.kt
 ```
+
+This file will:
+
+* connect the app to Supabase
+* store the project URL
+* store the anon public key
 
 You must replace:
 
@@ -230,11 +283,11 @@ PASTE_YOUR_SUPABASE_URL
 PASTE_YOUR_SUPABASE_ANON_KEY
 ```
 
-with their actual project details.
+with your own Supabase project details.
 
 ---
 
-# Part 6: Create the ViewModel
+# Part 5: Create the ViewModel 🧠
 
 Create:
 
@@ -242,7 +295,16 @@ Create:
 EventPosterViewModel.kt
 ```
 
-# Part 7: Build the Compose UI
+The ViewModel will:
+
+* upload images to Supabase Storage
+* retrieve image URLs
+* manage upload states
+* store success/error messages
+
+---
+
+# Part 6: Build the Compose UI 🎨
 
 Open:
 
@@ -250,13 +312,42 @@ Open:
 MainActivity.kt
 ```
 
-# Part 8: Run the app 🚀
+The app UI should include:
 
-7. Verify the image uploaded successfully.
+| Component     | Purpose                    |
+| ------------- | -------------------------- |
+| Button        | opens Android Photo Picker |
+| Image         | displays uploaded poster   |
+| Text          | shows upload status        |
+| Upload button | uploads selected image     |
 
 ---
 
-# Expected output
+# Android Photo Picker 📸
+
+The Android Photo Picker allows users to safely choose images from their device without requesting full storage permissions.
+
+This is the modern recommended Android approach.
+
+---
+
+# App Workflow 🔥
+
+```text
+1. User selects a poster image
+        ->
+2. App uploads image to Supabase Storage
+        ->
+3. Supabase returns the image URL
+        ->
+4. App displays uploaded image
+        ->
+5. Success message shown to user
+```
+
+---
+
+# Expected Output ✅
 
 Before upload:
 
@@ -271,34 +362,39 @@ After upload:
 Poster uploaded successfully 🎉
 ```
 
----
-
-# Extra activity functions: 🔥
-
-You can later add:
-
-| Feature              | Supabase service    |
-| -------------------- | ------------------- |
-| User login           | Auth                |
-| Save event details   | PostgreSQL database |
-| Like/bookmark events | Database            |
-| Live updates         | Realtime            |
-| Admin uploads        | Auth + Storage      |
-| Event comments       | Database            |
+The selected image should now appear inside the app.
 
 ---
 
-# Real-world explanation
+# Testing the App 🧪
 
-This activity demonstrates how modern mobile apps communicate with backend cloud services.
+Test the following:
 
-Instead of manually building:
+| Test          | Expected Result         |
+| ------------- | ----------------------- |
+| Select image  | Photo Picker opens      |
+| Upload image  | Upload succeeds         |
+| Display image | Uploaded image appears  |
+| Internet off  | Error message displayed |
 
-* servers
-* APIs
-* authentication systems
-* file storage systems
+---
 
-Supabase provides these services as a **Backend-as-a-Service (BaaS)** platform.
+# Real-world explanation 🌍
 
-You are therefore building a mobile app connected to a real cloud backend environment used in professional software development.
+This activity demonstrates how mobile apps connect to cloud backend systems.
+
+Instead of building your own:
+
+* file server
+* storage system
+* image hosting service
+
+Supabase provides these services for developers.
+
+This is known as:
+
+```text
+Backend-as-a-Service (BaaS)
+```
+
+You are therefore building a real cloud-connected Android application similar to systems used in professional software development.
